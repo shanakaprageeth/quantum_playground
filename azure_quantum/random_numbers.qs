@@ -1,8 +1,11 @@
+import Std.Diagnostics.DumpMachine;
 // import ms quantum libs
 import Microsoft.Quantum.Measurement;
 import Microsoft.Quantum.Intrinsic;
 import Microsoft.Quantum.Convert.*;
 import Microsoft.Quantum.Math.*;
+import Microsoft.Quantum.Diagnostics.*;
+
 // import standard libs
 import Std.Intrinsic.*;
 
@@ -12,7 +15,9 @@ operation RandomQbitMeasurement(nBits: Int) : Result[] {
     for qubit in register {
         H(qubit);
     }
+    DumpMachine();
     let results = MeasureEachZ(register);
+    DumpMachine();
     ResetAll(register);
     Message($"Random {nBits} qbit H Gate output");
     return results;
@@ -30,7 +35,6 @@ operation GenerateRandomNumberInLength(max : Int) : Int {
         set bits += chunk;
         set collected += chunkSize;
     }
-
     let sample = ResultArrayAsInt(bits[0..nBits-1]);
     
     // Return random number if it is within the requested range.
