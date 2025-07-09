@@ -19,14 +19,8 @@ operation sendQbit(message : Qubit, receiverq : Qubit) : Unit {
     // Encode the message into the entangled pair.
     CNOT(message, senderq);
     H(message);
-    Message("After encoding message with new sender qubit");
-    DumpMachine();
-    // Measure the qubits to extract the classical data we need to decode
-    // the message by applying the corrections on the bob qubit
-    // accordingly.
+    // Measure and send results to remote end with classical bits
     remoteEnd(receiverq, M(message), M(senderq));
-    Message("After sending mesured state through classical channel to remote end");
-    DumpMachine();
     Reset(senderq);
 }
 
@@ -69,6 +63,7 @@ operation teleport() : Result[] {
         // Initialize the message with all possible states for testing
         initializer(message);
         Message($"Teleporting state {state}");
+        DumpMachine();
 
         // teleport the message to 
         sendQbit(message, receiverq);
