@@ -27,6 +27,9 @@ MANIFEST
 # Generated visualization files (these are created by examples)
 qiskit/*.png
 
+# Temporary log files
+*.log
+
 # Virtual environments
 venv/
 env/
